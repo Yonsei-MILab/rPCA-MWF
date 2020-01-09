@@ -17,8 +17,8 @@ figure, imshow3(mGRE(:,:,:,1),[0 1],[4 10],'gray'); axis off image; title('1st e
 figure, imshow3(mGRE(:,:,:,end),[0 1],[4 10],'gray'); axis off image; title('30th echo mGRE');
 te_3d = repmat(reshape(te,1,1,1,30),128,128,30,1);
 
-im_temp = double(abs(mGRE(:,:,1:30,1:2:end,1)));
-te_temp = double(te_3d(:,:,:,1:2:end));
+im_temp = double(abs(mGRE(:,:,1:30,1:1:end,1)));
+te_temp = double(te_3d(:,:,:,1:1:end));
 N = size(im_temp);          
 delta  = 1e-2;         
 delta1 = 1e-2;          
@@ -33,6 +33,9 @@ nr2 = 2;
 nplr = prod(nlr);
 
 % make mask for minimization
+im_temp = double(abs(mGRE(:,:,1:30,1:2:end,1)));
+te_temp = double(te_3d(:,:,:,1:2:end));
+N = size(im_temp);         
 msk = abs(im_temp(:,:,:,1)); msk(msk<0.1*max(msk(:))) = 0; msk(msk~=0) = 1;
 msk = repmat(msk,[1 1 1 N(4)]);
 
